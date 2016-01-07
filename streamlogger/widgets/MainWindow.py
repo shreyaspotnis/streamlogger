@@ -28,9 +28,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def createDocks(self):
         self.zmq_subscriber = ZMQSubscriber(self.settings, self)
-
-        self.zmq_subscriber_dock = Dock('Subscriber', self.zmq_subscriber)
+        self.blank_widget = QtGui.QWidget(self)
+        self.zmq_subscriber_dock = Dock('Subscriber', widget=self.zmq_subscriber)
+        self.blank_widget_dock = Dock('blank_widget', widget=self.blank_widget)
         self.dock_area.addDock(self.zmq_subscriber_dock)
+        self.dock_area.addDock(self.blank_widget_dock)
 
     def loadSettings(self):
         """Load window state from self.settings"""
