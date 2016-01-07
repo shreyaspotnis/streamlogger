@@ -65,8 +65,13 @@ class ZMQSubscriber(QWidget, Ui_ZMQSubscriber):
 
     def grabData(self):
         if self.made_socket:
-            string = self.socket.recv()
-            topic, messagedata = string.split()
+            try:
+                string = self.socket.recv(flags=zmq.NOBLOCK)
+            except zmq.ZMQError:
+                return
+
+            print(string)
+            topic, date, time, messagedata = string.split(' ')
             print('test')
             self.lineEditDisp.setText(messagedata)
 
