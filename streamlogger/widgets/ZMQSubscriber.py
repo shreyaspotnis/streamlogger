@@ -49,6 +49,9 @@ class ZMQSubscriber(QWidget, Ui_ZMQSubscriber):
         self.settings.setValue('path_to_log_file', self.lineEditLogFile.text())
         self.settings.endGroup()
 
+        if self.file_pointer is not None:
+            self.file_pointer.close()
+
     def handleUpdateClicked(self):
         self.timer.setInterval(int(self.lineEditPeriod.text()))
         self.makeConnection()
