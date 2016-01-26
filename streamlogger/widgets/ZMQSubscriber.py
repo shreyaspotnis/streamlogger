@@ -78,8 +78,6 @@ class ZMQSubscriber(QWidget, Ui_ZMQSubscriber):
                 self.file_pointer.close()
                 self.file_pointer = None
 
-        print(state)
-
     def makeConnection(self):
         ip_addr = str(self.lineEditIP.text())
         port = str(self.lineEditPort.text())
@@ -106,8 +104,12 @@ class ZMQSubscriber(QWidget, Ui_ZMQSubscriber):
                 return
 
             print(string)
-            topic, date, time, messagedata = string.split(' ')
+            out = string.split(' ')
+            topic, date, time, messagedata = out[:4]
+            error_msg = ' '.join(out[4:])
             self.lineEditDisp.setText(messagedata)
+            self.lineEditError.setText(error_msg)
+            self.lineEditReadTime.setText(time)
 
             if self.file_pointer is not None:
                 # write the data
